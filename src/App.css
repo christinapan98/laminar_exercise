@@ -1,11 +1,30 @@
 .App {
   text-align: center;
   display: flex;
-  position: relative;
+  gap: 5vw;
+  width: 100%;
+  justify-content: center;
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 
-.App-filters {
+.App-left-col {
   position: sticky;
-  top: 0;
-  height: 25vh;
+  top: 30px;
+  height: fit-content;
+  padding: 10px;
+  border: 1px solid black;
+}
+
+.App-right-col {
+  border: 1px solid black;
+  padding: 10px;
+  text-align: left;
+}
+
+.App-filter-item {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding-bottom: 5px;
 }

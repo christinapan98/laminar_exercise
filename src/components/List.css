@@ -1,0 +1,15 @@
+.List-aggregates {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.List-item {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.List-metrics {
+  display: flex;
+  justify-content: space-between;
+}

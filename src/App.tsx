@@ -1,13 +1,13 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import data from './data/data.json';
 import List from './components/List.tsx';
 import { BarChart } from '@mui/x-charts/BarChart';
-
+// @ts-ignore: allow importing CSS as a side-effect until a global declaration (e.g. src/global.d.ts) is added
 import './App.css';
 
 function App() {
-  const [nameFilter, setNameFilter] = useState("");
-  const [dateFilter, setDateFilter] = useState(60);
+  const [nameFilter, setNameFilter] = useState<string>("");
+  const [dateFilter, setDateFilter] = useState<number>(60);
   
   const isStartWithinDateRange = (start_time: string) => {
     const currentDate = new Date();
@@ -18,36 +18,45 @@ function App() {
   };
 
   const calculateTotalWaterUsagePerTank = () => {
-    const tankWaterUsage: {[key: string]: number} = {};
+    const tankWaterMap: {[key: string]: Array<number>} = {};
     data.forEach(item => {
-      if (!tankWaterUsage[item.tank_name]) {
-        tankWaterUsage[item.tank_name] = 0;
+      if (!tankWaterMap[item.tank_name]) {
+        tankWaterMap[item.tank_name] = [0, 0];
       }
-      tankWaterUsage[item.tank_name] += item.metrics.Water || 0;
+      tankWaterMap[item.tank_name][0] += item.metrics.Water || 0;
+      tankWaterMap[item.tank_name][1] += item.savings.Water || 0;
     });
-    return tankWaterUsage;
+    return tankWaterMap;
   }
 
   const uniqueTankNames = Array.from(new Set(data.map(item => item.tank_name)));
-  const tankWaterUsage = calculateTotalWaterUsagePerTank();
+  const tankWaterMap = calculateTotalWaterUsagePerTank();
   return (
     <div className="App">
-      <div className="App-filters">
-         <select value={nameFilter} onChange={(e) => setNameFilter(e.target.value)}>
-          <option value="">
-            No selection
-          </option>
-          {[...uniqueTankNames].map(item => (
-            <option key={item} value={item}>
-              {item}
+      <div className="App-left-col">
+        <h3>Filter Selection</h3>
+        <div className="App-filter-item">
+          <label htmlFor="tankName">Tank Name:</label>
+          <select id="tankName" value={nameFilter} onChange={(e) => setNameFilter(e.target.value)}>
+            <option value="">
+              No selection
             </option>
-          ))}
-        </select>
+            {[...uniqueTankNames].map(item => (
+              <option key={item} value={item}>
+                {item}
+              </option>
+            ))}
+          </select>
+        </div>
 
-        <input type="range" id="volume" name="volume" min={0} max={60} value={dateFilter}
-        onChange={(e) => setDateFilter(Number(e.target.value))}/>
-        {dateFilter}
-
+        <div className="App-filter-item">
+          <label htmlFor="dateRange">Range:</label>
+          <input type="range" id="dateRange" min={0} max={60} value={dateFilter}
+          onChange={(e) => setDateFilter(Number(e.target.value))}/>
+          last {dateFilter}d
+        </div>
+      
+        <h3>Overall Tank Water Usage</h3>
         <BarChart
           xAxis={[
             {
@@ -57,7 +66,24 @@ function App() {
           ]}
           series={[
             {
-              data: Object.values(tankWaterUsage),
+              data: Object.values(tankWaterMap).map(item => item[0]),
+            },
+          ]}
+          height={150}
+          width={300}
+        />
+
+        <h3>Overall Tank Water Savings</h3>
+        <BarChart
+          xAxis={[
+            {
+              id: 'barCategories',
+              data: [...uniqueTankNames],
+            },
+          ]}
+          series={[
+            {
+              data: Object.values(tankWaterMap).map(item => item[1]),
             },
           ]}
           height={150}
@@ -65,7 +91,10 @@ function App() {
         />
       </div>
           
-      <List data={data.filter(item => item.tank_name.includes(nameFilter) && isStartWithinDateRange(item.start_time))} nameFilter={nameFilter} dateFilter={dateFilter}/>
+      <div className="App-right-col">
+        <List data={data.filter(item => item.tank_name.includes(nameFilter) && isStartWithinDateRange(item.start_time))} nameFilter={nameFilter} dateFilter={dateFilter}/>
+      </div>
+
     </div>
   );
 }
