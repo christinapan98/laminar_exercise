@@ -33,10 +33,10 @@ function List({data, nameFilter, dateFilter}: {data: any[], nameFilter: string, 
       <div>
         <h3>Aggregate Metrics for {nameFilter === "" ? "All Tanks " : nameFilter} in the last {dateFilter} days</h3>
         <div className="List-aggregates">
-          <span>Total Water Used: {totalWaterUsage}</span>
-          <span>Total Water Saved: {totalWaterSavings}</span>
-          <span>Total Time Taken: {totalTimeUsage}</span>
-          <span>Total Time Saved: {totalTimeSavings}</span>
+          <span>Total Water Used: {totalWaterUsage} gal</span>
+          <span>Total Water Saved: {totalWaterSavings} gal</span>
+          <span>Total Time Taken: {totalTimeUsage} s</span>
+          <span>Total Time Saved: {totalTimeSavings} s</span>
         </div>
       </div>
 
@@ -51,10 +51,10 @@ function List({data, nameFilter, dateFilter}: {data: any[], nameFilter: string, 
               <p>Started at: {String(startTime)}</p>
               <p>Ended at: {String(endTime)}</p>
               <div className="List-metrics">
-                  <span>Water Used: {item.metrics.Water}</span>
-                  <span>Water Saved: {item.savings.Water}</span>
-                  <span>Time Taken: {item.metrics.time}</span>
-                  <span>Time Saved: {item.savings.time}</span>
+                  <span>Water Use: {item.metrics.Water}gal</span>
+                  <span>Water Saved: {item.savings.Water}gal</span>
+                  <span>Time Taken: {item.metrics.time}s</span>
+                  <span>Time Saved: {item.savings.time}s</span>
               </div>
             </div>
           )
