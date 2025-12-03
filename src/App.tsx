@@ -1,12 +1,13 @@
 import React, {useState, useMemo} from 'react';
+import { BarChart } from '@mui/x-charts/BarChart';
+import { TankRecord } from './types/types.ts';
+import { isStartWithinDateRange } from "./utils/utils.ts";
 import data from './data/data.json';
 import List from './components/List.tsx';
-import { BarChart } from '@mui/x-charts/BarChart';
-import { isStartWithinDateRange } from "./utils/utils.ts";
 // @ts-ignore: allow importing CSS as a side-effect until a global declaration (e.g. src/global.d.ts) is added
 import './App.css';
 
-export const calculateTotalWaterUsagePerTank = (data: any[]) => {
+export const calculateTotalWaterUsagePerTank = (data: TankRecord[]) => {
   const tankWaterMap: {[key: string]: Array<number>} = {};
   data.forEach(item => {
     if (!tankWaterMap[item.tank_name]) {
@@ -25,7 +26,7 @@ function App() {
   const uniqueTankNames = useMemo(() => Array.from(new Set(data.map(item => item.tank_name))), []);
   const tankWaterMap = useMemo(() => calculateTotalWaterUsagePerTank(data), []);
   
-  const filteredData = data.filter(item => item.tank_name.includes(nameFilter) && isStartWithinDateRange(item.start_time, dateFilter));
+  const filteredData: Array<TankRecord> = data.filter(item => item.tank_name.includes(nameFilter) && isStartWithinDateRange(item.start_time, dateFilter));
   
   return (
     <div className="App">

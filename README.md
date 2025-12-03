@@ -16,7 +16,7 @@ This app currently simulates a dashboard where data is readily available on the 
 
 Pagination could also be added to improve performance and usability when working with large datasets, making it easier for users to navigate and explore extensive data entries.
 
-Further improvements include componetizing the bar chart to include the title along with the chart component, as well as componetizing the filters.
+Further improvements include componetizing the bar chart to include the title along with the chart component, as well as componetizing the filters. This app also focuses primarily on displaying tank metrics for water and time, and can be extended to include energy as well, or allow the user to pick which stat they want to focus on.
 
 ## Available Scripts
 

@@ -1,25 +1,24 @@
-import React, {useMemo} from 'react';
+import React from 'react';
+import { TankRecord } from '../types/types.ts';
 // @ts-ignore: allow importing CSS as a side-effect until a global declaration (e.g. src/global.d.ts) is added
 import './List.css';
 
-function List({data, nameFilter, dateFilter}: {data: any[], nameFilter: string, dateFilter: number}) {
-  const totals = useMemo(() => {
-    return data.reduce(
-      (acc, curr) => {
-        acc.totalWaterUsage += curr.metrics.Water;
-        acc.totalWaterSavings += curr.savings.Water;
-        acc.totalTimeUsage += curr.metrics.time;
-        acc.totalTimeSavings += curr.savings.time;
-        return acc;
-      },
-      {
-        totalWaterUsage: 0,
-        totalWaterSavings: 0,
-        totalTimeUsage: 0,
-        totalTimeSavings: 0,
-      }
-    );
-  }, [data]);
+function List({data, nameFilter, dateFilter}: {data: TankRecord[], nameFilter: string, dateFilter: number}) {
+  const totals = data.reduce(
+    (acc, curr) => {
+      acc.totalWaterUsage += curr.metrics.Water || 0;
+      acc.totalWaterSavings += curr.savings.Water || 0;
+      acc.totalTimeUsage += curr.metrics.time || 0;
+      acc.totalTimeSavings += curr.savings.time || 0;
+      return acc;
+    },
+    {
+      totalWaterUsage: 0,
+      totalWaterSavings: 0,
+      totalTimeUsage: 0,
+      totalTimeSavings: 0,
+    }
+  );
 
   const {
     totalWaterUsage,
@@ -52,9 +51,9 @@ function List({data, nameFilter, dateFilter}: {data: any[], nameFilter: string, 
               <p>Ended at: {String(endTime)}</p>
               <div className="List-metrics">
                   <span>Water Use: {item.metrics.Water !== null ? `${item.metrics.Water}gal` : 'N/A'}</span>
-                  <span>Water Saved: {item.metrics.Water !== null ? `${item.savings.Water}gal` : 'N/A'}</span>
-                  <span>Time Taken: {item.metrics.time}s</span>
-                  <span>Time Saved: {item.savings.time}s</span>
+                  <span>Water Saved: {item.savings.Water !== null ? `${item.savings.Water}gal` : 'N/A'}</span>
+                  <span>Time Taken: {item.metrics.time !== null ? `${item.metrics.time}s` : 'N/A'}</span>
+                  <span>Time Saved: {item.savings.time !== null ? `${item.savings.time}s` : 'N/A'}</span>
               </div>
             </div>
           )
