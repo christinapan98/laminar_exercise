@@ -1,6 +1,20 @@
-# Getting Started with Create React App
+## App functionality
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The app uses a two-column layout that lets users adjust filters while viewing charts and scrolling through the dataset. This design keeps the controls and visualizations accessible at all times.
+
+Aggregate metrics are computed based on the currently filtered subset of data (defaulting to the full dataset). This allows users to gain more meaningful insights by seeing how metrics change as filters are applied.
+
+## Tech Stack
+
+This project is built with React and TypeScript to provide a flexible component-based architecture with strong type safety. TypeScript helps catch potential issues early, especially when working with dynamic or inconsistent JSON data.
+
+For data visualization, the project uses MUI Charts, chosen for its clean API, React integration, and compatibility with the broader MUI component ecosystem.
+
+## Areas for extension
+
+This app currently simulates a dashboard where data is readily available on the frontend. In a real-world scenario, data would likely be fetched from a server via API calls. To handle future async behavior, it'd be helpful to implement a loading state that displays while data is being fetched. An error state would be useful as well, which I would implement using React error boundaries.
+
+Pagination could also be added to improve performance and usability when working with large datasets, making it easier for users to navigate and explore extensive data entries.
 
 ## Available Scripts
 
