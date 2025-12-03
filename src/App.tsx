@@ -52,7 +52,7 @@ function App() {
           last {dateFilter}d
         </div>
       
-        <h3>Overall Tank Water Usage</h3>
+        <h3>Overall Tank Water Usage (gal)</h3>
         <BarChart
           xAxis={[
             {
@@ -68,7 +68,7 @@ function App() {
           width={300}
         />
 
-        <h3>Overall Tank Water Savings</h3>
+        <h3>Overall Tank Water Savings (gal)</h3>
         <BarChart
           xAxis={[
           {

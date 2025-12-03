@@ -51,8 +51,8 @@ function List({data, nameFilter, dateFilter}: {data: any[], nameFilter: string, 
               <p>Started at: {String(startTime)}</p>
               <p>Ended at: {String(endTime)}</p>
               <div className="List-metrics">
-                  <span>Water Use: {item.metrics.Water}gal</span>
-                  <span>Water Saved: {item.savings.Water}gal</span>
+                  <span>Water Use: {item.metrics.Water !== null ? `${item.metrics.Water}gal` : 'N/A'}</span>
+                  <span>Water Saved: {item.metrics.Water !== null ? `${item.savings.Water}gal` : 'N/A'}</span>
                   <span>Time Taken: {item.metrics.time}s</span>
                   <span>Time Saved: {item.savings.time}s</span>
               </div>
